@@ -7,9 +7,9 @@ import axios, {
 import { userData } from "./httpExample";
 
 export interface IHTTPService {
-  get(url: String, httpHeaders?: AxiosHeaders): Promise<AxiosResponse>;
-  delete(url: String, httpHeaders?: AxiosHeaders): Promise<AxiosResponse>;
-  post(url: String, data: userData): Promise<AxiosResponse>;
+  get(url: string, httpHeaders?: AxiosHeaders): Promise<AxiosResponse>;
+  delete(url: string, httpHeaders?: AxiosHeaders): Promise<AxiosResponse>;
+  post(url: string, data: userData): Promise<AxiosResponse>;
 }
 
 export class HttpService implements IHTTPService {
@@ -18,7 +18,10 @@ export class HttpService implements IHTTPService {
     this.axiosInstance = axios.create(configuration);
   }
 
-  async get(url: string, httpHeaders?: AxiosHeaders): Promise<AxiosResponse> {
+  async get<T>(
+    url: string,
+    httpHeaders?: AxiosHeaders
+  ): Promise<AxiosResponse<T>> {
     try {
       const response = await this.axiosInstance.get(url, {
         headers: httpHeaders,
@@ -28,10 +31,11 @@ export class HttpService implements IHTTPService {
       throw error;
     }
   }
+
   async delete(
     url: string,
     httpHeaders?: AxiosHeaders
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse<void>> {
     try {
       {
         const response = await this.axiosInstance.delete(url, {
@@ -43,7 +47,12 @@ export class HttpService implements IHTTPService {
       throw error;
     }
   }
-  async post(url: string, data: userData): Promise<AxiosResponse> {
+
+  async post<T, D>(
+    url: string,
+    httpHeaders?: AxiosHeaders,
+    data?: T
+  ): Promise<AxiosResponse<D>> {
     try {
       const response = await this.axiosInstance.post(url, data);
       return response;
