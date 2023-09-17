@@ -1,6 +1,6 @@
 import { HttpService, IHTTPService } from "./HTTPService";
 import { AxiosHeaders, AxiosResponse } from "axios";
-import { userData } from "./httpExample";
+import { customConfig, userData } from "./httpExample";
 
 export class DecoratorHTTP implements IHTTPService {
   protected http: IHTTPService;
@@ -20,5 +20,3 @@ export class DecoratorHTTP implements IHTTPService {
     return this.http.post(url, data);
   }
 }
-
-const deco = new DecoratorHTTP(new HttpService());

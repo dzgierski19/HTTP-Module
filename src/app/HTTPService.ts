@@ -4,7 +4,7 @@ import axios, {
   AxiosResponse,
   CreateAxiosDefaults,
 } from "axios";
-import { userData } from "./httpExample";
+import { customConfig, userData } from "./httpExample";
 
 export interface IHTTPService {
   get(url: string, httpHeaders?: AxiosHeaders): Promise<AxiosResponse>;
@@ -61,3 +61,6 @@ export class HttpService implements IHTTPService {
     }
   }
 }
+
+// const a = new HttpService(customConfig);
+// a.get("en/wallet/");
