@@ -41,8 +41,3 @@ export class Cache<T> implements ICache<T> {
 }
 
 export const newCache = new Cache();
-
-newCache.add("dupa", "gruba");
-console.log(newCache.list);
-newCache.clear();
-console.log(newCache.list);

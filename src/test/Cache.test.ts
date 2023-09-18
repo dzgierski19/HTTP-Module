@@ -1,4 +1,4 @@
-import { Cache, newCache } from "../app/Cache";
+import { Cache } from "../app/Cache";
 
 describe("Cache test suite ", () => {
   let testCache: Cache<string>;

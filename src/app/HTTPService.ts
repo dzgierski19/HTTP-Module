@@ -61,6 +61,3 @@ export class HttpService implements IHTTPService {
     }
   }
 }
-
-// const a = new HttpService(customConfig);
-// a.get("en/wallet/");
