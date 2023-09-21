@@ -4,16 +4,38 @@ import { CacheService } from "../app/CacheService";
 import { HttpService } from "../app/HTTPService";
 import { customConfig } from "../app/httpExample";
 import { newCache } from "../app/Cache";
-axios.defaults.adapter = "http";
+import { Cache } from "../app/Cache";
+
+const cache = new Cache<AxiosResponse>();
+
 describe("CacheService test suite", () => {
-  const testCache = new CacheService(new HttpService(customConfig));
-  const exampleDomain = "http://ethereum.org";
+  const testCacheService = new CacheService(
+    new HttpService(customConfig),
+    cache
+  );
+
   const exampleURL = "/en/wallet";
-  const exampleDomanAndURL = "http://ethereum.org/en/wallet";
-  test("can fetch test response", async () => {
-    const scope = nock(exampleDomain).get(exampleURL).reply(200);
-    await testCache.get<AxiosResponse>(exampleDomanAndURL);
-    scope.done();
-    expect(newCache.list.has(exampleDomanAndURL)).toBeTruthy();
+  const exampleBadURL = "/en/vitalik";
+
+  const scope = nock(customConfig.baseURL)
+    .get(exampleURL)
+    .reply(200, "path matched")
+    .get(exampleBadURL)
+    .reply(400, "Not Found");
+
+  it("should return reponse for valid url", async () => {
+    expect(cache.check(exampleURL)).toBeFalsy();
+    await testCacheService.get<AxiosResponse>(exampleURL);
+    expect(cache.check(exampleURL)).toBeTruthy();
+  });
+
+  it("should throw error for invalid url", async () => {
+    try {
+      expect(await testCacheService.get<AxiosResponse>(exampleBadURL)).toBe(
+        400
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
   });
 });

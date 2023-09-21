@@ -16,7 +16,11 @@ export class DecoratorHTTP implements IHTTPService {
   ): Promise<AxiosResponse> {
     return this.http.delete(url, httpHeaders);
   }
-  async post(url: string, data: userData): Promise<AxiosResponse> {
+  async post(
+    url: string,
+    data: userData,
+    httpHeaders?: AxiosHeaders
+  ): Promise<AxiosResponse> {
     return this.http.post(url, data);
   }
 }
