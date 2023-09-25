@@ -3,7 +3,6 @@ import axios, { AxiosResponse } from "axios";
 import { CacheService } from "../app/CacheService";
 import { HttpService } from "../app/HTTPService";
 import { customConfig } from "../app/httpExample";
-import { newCache } from "../app/Cache";
 import { Cache } from "../app/Cache";
 
 const cache = new Cache<AxiosResponse>();
@@ -31,11 +30,9 @@ describe("CacheService test suite", () => {
 
   it("should throw error for invalid url", async () => {
     try {
-      expect(await testCacheService.get<AxiosResponse>(exampleBadURL)).toBe(
-        400
-      );
+      await testCacheService.get<AxiosResponse>(exampleBadURL);
     } catch (error) {
-      console.log(error.message);
+      expect(error.response.status).toBe(400);
     }
   });
 });
