@@ -1,1 +1,1 @@
-# HTTP-Module
+Prepare an abstraction for a simple HTTP module with Axios that will allow executing GET, POST, and DELETE requests to a specific URL with the ability to add headers and request bodies. Responses from GET requests should be cached so that they can be returned when the same URL is requested again. Use the Decorator pattern in the task to eliminate two responsibilities from a single class.
